@@ -1,2 +1,2 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/f8rxtjk76555vo3d?svg=true)](https://ci.appveyor.com/project/Ilya/timelinehw)
-https://iliakra.github.io/TimeLineHW/
+[![Build status](https://ci.appveyor.com/api/projects/status/8jxqkj1x26tcq3sr?svg=true)](https://ci.appveyor.com/project/Ilya/rxjshw)
+https://iliakra.github.io/RxJsHW/
