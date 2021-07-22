@@ -55,7 +55,7 @@ function build(message) {
 
 const source = interval(1000);
 let sourceObs$ = source.subscribe(() => {
-  const obs$ = ajax.getJSON('http://localhost:7070/messages/unread').pipe(
+  const obs$ = ajax.getJSON('https://rxjsserver.herokuapp.com/messages/unread').pipe(
     map((userResponse) => {
       console.log('resp', userResponse);
       let messages = userResponse.messages;
