@@ -1,4 +1,4 @@
-import { ajax } from 'rxjs/ajax';
+import { ajax } from '/rxjs/ajax';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { interval } from 'rxjs';
