@@ -1,6 +1,6 @@
 /* eslint-disable no-plusplus */
 import { ajax } from 'rxjs/ajax';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { of, interval } from 'rxjs';
 
 const mainContainer = document.getElementById('main-container');
@@ -47,22 +47,17 @@ function build(message) {
   mainContainer.insertBefore(messageContainer, firstChildElement);
 }
 
-const source = interval(1000);
-const sourceObs$ = source.subscribe(() => {
-  const obs$ = ajax.getJSON('https://rxjsserver.herokuapp.com/messages/unread').pipe(
-    map((userResponse) => {
-      const { messages } = userResponse;
-      for (let i = 0; i < messages.length; i++) {
-        build(messages[i]);
-      }
-    }),
-    catchError((error) => {
-      // eslint-disable-next-line no-console
-      console.log('error: ', error);
-      return of(error);
-    }),
-  );
-  obs$.subscribe();
+const sourceObs$ = interval(1000).pipe(switchMap(() => ajax.getJSON('https://rxjsserver.herokuapp.com/messages/unread')), catchError((error) => {
+  // eslint-disable-next-line no-console
+  console.log('error: ', error);
+  return of(error);
+}));
+
+const subscription = sourceObs$.subscribe((userResponse) => {
+  const { messages } = userResponse;
+  for (let i = 0; i < messages.length; i++) {
+    build(messages[i]);
+  }
 });
 
-setTimeout(() => sourceObs$.unsubscribe(), 5000);
+setTimeout(() => subscription.unsubscribe(), 5000);
